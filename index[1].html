@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10131c">
+<meta name="description" content="One Detail — free daily detective mysteries, mind games and psychological puzzles.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>ONE DETAIL — Mystery Game</title>
+<style>
+:root{color-scheme:dark;--bg:#10131c;--panel:#191e2b;--panel2:#202738;--line:#30394d;--ink:#f5f2eb;--muted:#a7afc0;--gold:#e6b95c;--gold2:#f6d78f;--green:#8bd5ad;--red:#f0a09a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#20283a 0,#10131c 55%);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{max-width:820px;margin:auto;padding:22px 18px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid var(--line);padding-bottom:17px}
+.brand small,.eyebrow{letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-size:.68rem;font-weight:800}.brand h1{margin:0;font-size:clamp(1.7rem,5vw,2.5rem);letter-spacing:.06em}.brand h1 span{color:var(--gold)}
+.stat{background:var(--panel);border:1px solid var(--line);padding:9px 14px;border-radius:13px;text-align:right;min-width:105px}.stat b{display:block;font-size:1.3rem}.stat small{color:var(--muted);font-size:.65rem;letter-spacing:.12em}
+main{padding-top:22px}.hero,.card{background:linear-gradient(145deg,#1c2332,#171c28);border:1px solid var(--line);border-radius:20px;padding:21px;margin-bottom:15px;box-shadow:0 12px 35px #0002}.hero h2{font-size:clamp(1.5rem,4vw,2.15rem);line-height:1.15;margin:8px 0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.category{border:1px solid var(--line);border-radius:17px;background:var(--panel);padding:17px;text-align:left;color:var(--ink);min-height:165px;transition:.15s}.category:hover{border-color:var(--gold);transform:translateY(-2px)}.category .emoji{font-size:1.8rem}.category h3{margin:10px 0 4px;font-size:1.08rem}.category p{font-size:.85rem;color:var(--muted);margin:0}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:4px 9px;font-size:.67rem;color:var(--gold2);font-weight:800;letter-spacing:.1em}
+button.primary{background:var(--gold);color:#171717;border:0;border-radius:12px;padding:12px 18px;font-weight:800}button.secondary,.answer{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+button.secondary:hover,.answer:hover{border-color:var(--gold)}button:disabled{opacity:.55;cursor:default}
+.casehead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.progress{height:6px;background:#30394d;border-radius:99px;overflow:hidden;margin:12px 0 18px}.progress div{height:100%;background:var(--gold);width:0;transition:width .2s}
+.clues{display:grid;gap:12px;background:#111722;border-radius:14px;padding:15px;margin-top:16px}.clue{display:flex;gap:11px;font-size:.93rem}.clue b{color:var(--gold);min-width:17px}
+.answers{display:grid;gap:9px;margin:13px 0}.answer{text-align:left;width:100%;font-size:.94rem}.answer.selected{border-color:var(--gold);background:#3b3324}.answer.correct{border-color:var(--green);background:#1c352c}.feedback{border:1px solid var(--line);border-radius:14px;padding:15px;margin:12px 0;background:#121925}.feedback.good{border-color:#477e63}.feedback.bad{border-color:#87544e}.actions{display:flex;gap:10px;flex-wrap:wrap}.actions>*{flex:1}
+.hidden{display:none!important}.footer{border-top:1px solid var(--line);margin-top:30px;padding-top:15px;display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.72rem}
+.daily{display:flex;align-items:center;justify-content:space-between;gap:12px}.daily strong{display:block}.daily button{white-space:nowrap}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.category{min-height:0}.wrap{padding:15px 13px 35px}.hero,.card{padding:17px}.top{align-items:flex-start}.stat{min-width:85px}.daily{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <div class="brand"><small>A daily detective game</small><h1>ONE DETAIL<span>.</span></h1></div>
+ <div class="stat"><small>DETECTIVE XP</small><b id="xp">0</b></div>
+</header>
+<main>
+<section id="home">
+ <div class="hero">
+  <span class="pill">FREE TO PLAY</span>
+  <h2>Everything makes sense.<br>Until you notice one detail.</h2>
+  <p class="muted">Investigate strange stories, challenge your logic, and uncover the detail everyone else missed.</p>
+  <div class="daily">
+   <div><span class="eyebrow">YOUR DAILY CHALLENGE</span><strong id="daily-label">A fresh case is waiting.</strong><small class="muted" id="daily-status">Solve a case to earn detective XP.</small></div>
+   <button class="primary" id="daily-btn">Play daily case →</button>
+  </div>
+ </div>
+ <div class="eyebrow" style="margin:22px 2px 12px">CHOOSE YOUR INVESTIGATION</div>
+ <div class="grid">
+  <button class="category" data-cat="0"><span class="emoji">🔎</span><h3>Detective Files</h3><p>Alibis, thefts, suspicious stories and investigations.</p></button>
+  <button class="category" data-cat="1"><span class="emoji">🧩</span><h3>Mind Games</h3><p>Logic traps, lateral thinking and impossible situations.</p></button>
+  <button class="category" data-cat="2"><span class="emoji">🧠</span><h3>Psychological Twists</h3><p>Unreliable narrators, memory and hidden motives.</p></button>
+ </div>
+ <div class="card" style="margin-top:15px"><span class="eyebrow">HOW TO PLAY</span><p class="muted" style="margin-bottom:0">Read the story and evidence. Choose the answer best supported by the clues. Correct answers earn 100 XP, or 50 XP if you use a hint. Your progress is saved on this device.</p></div>
+</section>
+<section id="game" class="hidden">
+ <div class="casehead"><button class="secondary" id="back">← Collections</button><span class="eyebrow" id="case-count">CASE 1 / 5</span></div>
+ <div class="progress"><div id="progress"></div></div>
+ <article class="card">
+  <div class="casehead"><span class="eyebrow" id="category">DETECTIVE FILES</span><span class="pill" id="difficulty">EASY</span></div>
+  <h2 id="title" style="margin:5px 0 10px;font-size:1.7rem"></h2><p id="story" class="muted"></p>
+  <div class="clues"><span class="eyebrow">EVIDENCE & CLUES</span><div id="clues"></div></div>
+ </article>
+ <h3 style="margin-bottom:3px">What explains the mystery?</h3><p class="muted" style="font-size:.85rem;margin-top:0">Choose the answer best supported by the evidence.</p>
+ <div class="answers" id="answers"></div>
+ <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+ <div class="actions"><button class="secondary" id="hint">💡 Reveal hint</button><button class="primary" id="submit">Submit answer</button></div>
+ <p class="muted" style="font-size:.75rem;text-align:center" id="game-note">Correct answer: 100 XP · With hint: 50 XP</p>
+</section>
+<section id="finish" class="hidden">
+ <div class="hero" style="text-align:center;padding:35px 20px"><div style="font-size:3rem">🏆</div><span class="eyebrow">COLLECTION COMPLETED</span><h2 id="finish-title">Well done, detective!</h2><p class="muted" id="finish-copy"></p><h2 id="finish-score" style="color:var(--gold)"></h2></div>
+ <div class="actions"><button class="primary" id="finish-home">Explore collections</button><button class="secondary" id="replay">Replay collection</button></div>
+</section>
+</main>
+<footer class="footer"><span>ONE DETAIL · EARLY ACCESS</span><span>Made for curious minds worldwide</span></footer>
+</div>
+<script>
+const DATA = [
+[
+{t:'The Wet Umbrella',d:'EASY',s:'A rare watch vanished from a hotel room during a storm. Three guests were questioned.',c:['Anna says she entered the hotel at 8 PM carrying a completely dry umbrella.','Ben says he never left his room.','Clara says she arrived at 8 PM soaking wet.','The hotel entrance camera shows heavy rain falling continuously from 7:30 to 8:30 PM.'],o:['Anna','Ben','Clara'],a:0,h:'What should an umbrella look like after being outside in heavy rain?',e:'Anna claimed to have entered during heavy rain with a completely dry umbrella. That makes her account suspicious, but it is a clue rather than proof of theft.'},
+{t:'The Locked Gallery',d:'MEDIUM',s:'A painting disappeared from a gallery that had one entrance. The alarm was never triggered.',c:['The gallery door alarm was tested and working.','The guard says nobody entered after 6 PM.','The cleaning worker says she left at 5:50 PM.','A delivery receipt is signed inside the gallery at 6:20 PM.'],o:['The guard’s statement','The cleaning worker’s statement','The alarm technician'],a:0,h:'Which evidence proves someone was inside after the guard says nobody entered?',e:'The signed delivery receipt at 6:20 PM conflicts with the guard’s claim. It exposes an unreliable statement but does not identify the culprit.'},
+{t:'The Missing Necklace',d:'MEDIUM',s:'A necklace disappeared from a house. The owner says the window was locked all night.',c:['The window latch was broken from the inside.','The garden below the window has no footprints.','The front door was opened by the owner at 9 PM.','The owner says nobody else had a key.'],o:['The thief entered through the window','The owner’s account needs investigating','A stranger climbed the wall'],a:1,h:'Which clue challenges the owner’s certainty about what happened?',e:'The broken latch from inside challenges the simple story of an outsider entering through the window. The evidence suggests the scene may have been staged, so the owner’s account needs investigating.'},
+{t:'The Last Train',d:'HARD',s:'A suspect says he could not have reached the station before 9 PM because the last train had already left.',c:['The station clock reads 8:45 PM.','The station clock is 20 minutes fast.','The train timetable says departure is 9 PM.','The suspect says he checked the station clock.'],o:['He missed the train','He may have arrived before 9 PM','The timetable is incorrect'],a:1,h:'Correct the station clock before deciding what time it really was.',e:'If the clock is 20 minutes fast, its 8:45 reading means the actual time was 8:25. The train had not left yet.'},
+{t:'The Empty Safe',d:'EXPERT',s:'A safe was found open at 7 AM. The owner insists nobody knew the combination.',c:['The combination was changed yesterday.','The new combination was written on a note inside the safe.','The safe was locked at midnight.','Only the owner and manager entered the office.'],o:['A random burglar guessed it','Someone with access could have read the note','The safe opened by itself'],a:1,h:'Where was the new combination written?',e:'The combination was written inside the safe. Someone who had access after it was opened could have read it. The owner’s claim does not establish that nobody else could know it.'}
+],
+[
+{t:'The Three Switches',d:'EASY',s:'You are outside a closed room. Three switches are outside; only one operates a light bulb inside. You may enter the room only once.',c:['The bulb is an ordinary incandescent bulb.','You can switch lights on and off before entering.','You cannot see the bulb from outside.','You can touch the bulb safely after entering.'],o:['Use the bulb’s warmth as well as its light','Flip all three switches at once','Enter the room three times'],a:0,h:'A bulb can reveal more than whether it is glowing.',e:'Turn switch A on for several minutes, then turn it off. Turn B on and enter. If the bulb is lit, B is correct. If off but warm, A is correct. If off and cool, C is correct.'},
+{t:'The Two Doors',d:'MEDIUM',s:'Two doors stand before you. One leads to safety, the other to danger. Two guards know which is which.',c:['One guard always tells the truth.','One guard always lies.','You do not know which guard is which.','You may ask one guard one yes-or-no question.'],o:['Ask which door the other guard would say is safe, then choose the opposite','Ask whether the left door is safe','Ask both guards the same question'],a:0,h:'You need a question that makes both guards point toward the wrong door.',e:'Ask either guard: “Which door would the other guard say leads to safety?” Both indicate the dangerous door, so choose the opposite.'},
+{t:'The Number Pattern',d:'MEDIUM',s:'Find the next number in this sequence.',c:['2, 6, 12, 20, 30, ?','Each number is built using two consecutive whole numbers.','The difference between terms increases by 2.','There is one intended simple pattern.'],o:['40','42','44'],a:1,h:'Look at the differences: 4, 6, 8, 10...',e:'The next difference is 12. Therefore 30 + 12 = 42. The terms also follow n × (n + 1).'},
+{t:'The Silent Room',d:'HARD',s:'A person enters a room, turns off the light, and goes to sleep. The next morning, many people have died.',c:['The room is a lighthouse control room.','The light was the lighthouse beacon.','Ships were navigating near dangerous rocks.','The person was the lighthouse keeper.'],o:['The keeper turned off the beacon','A fire started','The keeper locked the doors'],a:0,h:'What kind of light can affect people far outside the room?',e:'The lighthouse beacon was switched off. Ships relying on it could have crashed on nearby rocks. This is a lateral-thinking puzzle, not a conventional crime.'},
+{t:'The Five Hats',d:'EXPERT',s:'Three prisoners stand in a line, all facing forward. They are given hats from a set of three black and two white hats.',c:['The last prisoner sees the two prisoners ahead.','The middle prisoner sees the first prisoner.','The first prisoner sees nobody.','The last prisoner says “I do not know my hat color.” The middle prisoner also says “I do not know.”'],o:['The first prisoner knows their hat is black','The first prisoner knows their hat is white','Nobody can know'],a:0,h:'If the last prisoner had seen two white hats, what could they conclude?',e:'If the last prisoner saw two white hats, their own hat would have to be black because only two white hats exist. Since they cannot tell, at least one of the two hats ahead is black. The middle prisoner hears this and sees the first prisoner. If the first hat were white, the middle prisoner would know their own hat was black. Since they still do not know, the first hat must be black.'}
+],
+[
+{t:'The Forgotten Birthday',d:'EASY',s:'A man says he forgot his friend’s birthday. Yet he sent a gift exactly one day before the birthday.',c:['The gift arrived on the birthday.','The sender says he forgot the date.','The gift was ordered a month earlier.','The sender scheduled delivery in advance.'],o:['He may have forgotten on the day but planned earlier','He never forgot anything','The delivery company changed the date'],a:0,h:'Can someone plan something in advance and later forget the date?',e:'Yes. Forgetting a date at a particular moment does not mean a person never knew it or planned for it. The details do not prove deception.'},
+{t:'The Perfect Witness',d:'MEDIUM',s:'A witness claims to have seen a thief clearly from across the street during a power outage.',c:['The streetlights were off.','The witness says the thief wore a bright red coat.','A passing car had working headlights.','The witness was standing behind a closed curtain.'],o:['The witness could not have seen anything','The witness may have seen the coat in the headlights','The thief wore black'],a:1,h:'What other source of light was available?',e:'The passing car headlights could briefly illuminate the street and reveal the coat. A power outage does not necessarily mean complete darkness.'},
+{t:'The Anonymous Letter',d:'MEDIUM',s:'A letter arrives accusing a person of stealing. The writer claims to be a stranger who knows nothing about the household.',c:['The letter uses a nickname only family members use.','The letter is unsigned.','The envelope has no return address.','The accusation mentions a missing ring.'],o:['The writer may know the household personally','The mail carrier wrote it','The letter must be true'],a:0,h:'Which detail suggests the writer knows more than a stranger should?',e:'The private family nickname suggests familiarity with the household. It does not identify the writer, but contradicts the claim of being a complete stranger.'},
+{t:'The Borrowed Memory',d:'HARD',s:'Two friends describe the same childhood event. One remembers a red car; the other remembers a blue car.',c:['The event happened 20 years ago.','Neither friend took photographs.','They discussed the memory together many times.','Both are confident their memory is accurate.'],o:['One must be lying','Memory can be reconstructed and influenced by conversations','The event never happened'],a:1,h:'Can repeated retelling change how people remember an event?',e:'Human memory is reconstructive. Repeated conversations and outside information can influence recollection. Conflicting memories do not automatically mean someone is lying.'},
+{t:'The Unreliable Narrator',d:'EXPERT',s:'A narrator tells you: “I never entered the house. I only watched from outside. I saw the clock on the wall stop at midnight.”',c:['The clock is mounted on an interior wall.','The windows are covered with opaque curtains.','The narrator says they never entered.','There are no mirrors outside.'],o:['The narrator’s account contains a contradiction','The clock must be broken','The narrator was asleep'],a:0,h:'How could someone outside see a clock on an interior wall through covered windows?',e:'With opaque curtains covering the windows, the narrator could not see the interior clock from outside. At least one part of the account is false or incomplete.'}
+]
+];
+const names=['Detective Files','Mind Games','Psychological Twists'];
+let cat=0,index=0,selection=-1,usedHint=false,answered=false,score=Number(localStorage.getItem('od-xp')||0),solved=Number(localStorage.getItem('od-solved')||0),streak=Number(localStorage.getItem('od-streak')||0),startScore=0,dailyDone=localStorage.getItem('od-daily')===new Date().toDateString();
+const $=id=>document.getElementById(id);
+function persist(){localStorage.setItem('od-xp',score);localStorage.setItem('od-solved',solved);localStorage.setItem('od-streak',streak);$('xp').textContent=score;$('daily-status').textContent=dailyDone?'Daily case completed on this device.':'Solve today’s featured case to earn XP.'}
+function show(page){['home','game','finish'].forEach(x=>$(x).classList.toggle('hidden',x!==page))}
+function begin(c,i=0){cat=c;index=i;startScore=score;show('game');render()}
+function render(){let x=DATA[cat][index];selection=-1;usedHint=false;answered=false;$('case-count').textContent=`CASE ${index+1} / 5`;$('progress').style.width=`${index/5*100}%`;$('category').textContent=names[cat].toUpperCase();$('difficulty').textContent=x.d;$('title').textContent=x.t;$('story').textContent=x.s;$('clues').innerHTML=x.c.map((v,i)=>`<div class="clue"><b>${i+1}.</b><span>${v}</span></div>`).join('');$('answers').innerHTML=x.o.map((v,i)=>`<button class="answer" data-i="${i}"><b>${String.fromCharCode(65+i)}.</b> ${v}</button>`).join('');$('answers').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(answered)return;selection=+b.dataset.i;$('answers').querySelectorAll('button').forEach(z=>z.classList.toggle('selected',z===b))});$('feedback').className='feedback hidden';$('hint').disabled=false;$('submit').disabled=false;$('hint').textContent='💡 Reveal hint';$('submit').textContent='Submit answer'}
+$('hint').onclick=()=>{if(answered||usedHint)return;usedHint=true;$('feedback').className='feedback';$('feedback').innerHTML='<b>💡 Detective hint</b><p class="muted">'+DATA[cat][index].h+'</p>';$('hint').disabled=true};
+function advance(){if(index<4){index++;render()}else{show('finish');let earned=score-startScore;$('finish-title').textContent='Collection completed!';$('finish-copy').textContent='You finished '+names[cat]+'. Your detective XP is saved on this device.';$('finish-score').textContent='+'+earned+' XP';}}
+$('submit').onclick=()=>{if(answered){advance();return}if(selection<0){$('game-note').textContent='Choose an answer before submitting.';return}let x=DATA[cat][index],ok=selection===x.a;answered=true;if(ok){score+=usedHint?50:100;solved++;streak++}else streak=0;persist();$('feedback').className='feedback '+(ok?'good':'bad');$('feedback').innerHTML='<b>'+ (ok?'✓ Correct deduction!':'✕ Not quite, detective.')+'</b><p>'+x.e+'</p><small class="muted">'+(ok?'+'+(usedHint?50:100)+' XP earned.':'No XP this time. Read the explanation and keep investigating.')+'</small>';$('answers').querySelectorAll('button').forEach((b,i)=>{b.disabled=true;if(i===x.a)b.classList.add('correct')});$('hint').disabled=true;$('submit').textContent=index===4?'Finish collection':'Next case';$('progress').style.width=`${(index+1)/5*100}%`};
+$('back').onclick=()=>show('home');document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>begin(+b.dataset.cat));$('finish-home').onclick=()=>show('home');$('replay').onclick=()=>begin(cat);
+$('daily-btn').onclick=()=>{if(dailyDone){alert('You have already completed today’s featured case. Come back tomorrow!');return}let day=Math.floor(Date.now()/86400000)%15;let c=Math.floor(day/5),i=day%5;begin(c,i)};
+const oldSubmit=$('submit').onclick;
+$('submit').onclick=()=>{let wasAnswered=answered;oldSubmit();if(!wasAnswered&&answered&&dailyMode){dailyDone=true;localStorage.setItem('od-daily',new Date().toDateString());$('daily-status').textContent='Daily case completed! Great work.';dailyMode=false}};
+let dailyMode=false;const oldDaily=$('daily-btn').onclick;$('daily-btn').onclick=()=>{if(dailyDone){alert('You have already completed today’s featured case. Come back tomorrow!');return}dailyMode=true;let day=Math.floor(Date.now()/86400000)%15;begin(Math.floor(day/5),day%5)};
+persist();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
